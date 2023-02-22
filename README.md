@@ -1,3 +1,9 @@
+# Project in web programming EDAF90
+### Framework – Svelte https://svelte.dev/tutorial/basics
+### Styling – https://flowbite-svelte.com/
+### External api - OpenLibrary
+
+
 # create-svelte
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
