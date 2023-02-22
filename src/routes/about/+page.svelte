@@ -9,10 +9,5 @@
 
 <script>
   export let name = "komponent";
-  console.log("testar ny komponent");
   import Navbar from "../Navbar.svelte";
-  import { onMount } from "svelte";
-  onMount(() => {
-    console.log("testar navbar");
-  });
 </script>
