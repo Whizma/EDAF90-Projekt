@@ -5,7 +5,7 @@
 <Navbar let:hidden let:toggle>
 	<NavBrand href="/">
 		<img
-			src="https://w7.pngwing.com/pngs/688/689/png-transparent-pogchamp-emote-memes-mixed-memes.png"
+			src="https://media.istockphoto.com/id/850219738/vector/pixel-book-pixel-art-cartoon-retro-game-style.jpg?s=170667a&w=0&k=20&c=OMRrA9MMiNIooFzzDIRlMvEdMZZIi8JxvXCN4bm4U9o="
 			class="mr-3 h-6 sm:h-9"
 			alt="Pog"
 		/>
