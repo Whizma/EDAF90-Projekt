@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { fade } from 'svelte/transition';
 	import { onMount, onDestroy } from 'svelte';
 	import Navbar from './Navbar.svelte';
@@ -9,14 +9,14 @@
 	];
 
 	let index = 0;
-	let interval = null;
+	let interval: number  = 0;
 
 	const next = () => {
 		index = (index + 1) % carouselPhotos.length;
 	};
 
 	onMount(() => {
-		interval = setInterval(next, 5000);
+		interval = window.setInterval(next, 5000);
 	});
 
 	onDestroy(() => {
