@@ -24,8 +24,6 @@
 	});
 </script>
 
-<Navbar />
-
 {#each [carouselPhotos[index]] as src (index)}
 	<img transition:fade {src} alt="" />
 {/each}
