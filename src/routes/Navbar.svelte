@@ -10,7 +10,7 @@
 			alt="Pog"
 		/>
 		<span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-			Fett digitalt library
+			Fett digitalt bibliotek
 		</span>
 	</NavBrand>
 	<NavHamburger on:click={toggle} />
