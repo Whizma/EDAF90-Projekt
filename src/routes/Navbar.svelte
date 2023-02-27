@@ -17,6 +17,6 @@
 	<NavUl {hidden}>
 		<NavLi href="/" active={true}>Home</NavLi>
 		<NavLi href="/about">About</NavLi>
-		<NavLi href="/">Trollad</NavLi>
+		<NavLi href="/search">Search</NavLi>
 	</NavUl>
 </Navbar>
