@@ -2,9 +2,8 @@
 	import { fade } from 'svelte/transition';
 	import { onMount, onDestroy } from 'svelte';
 	const carouselPhotos = [
-		'https://foodtank.com/wp-content/uploads/2021/07/alfons-morales-YLSwjSy7stw-unsplash.jpg',
-		'https://img-cdn.inc.com/image/upload/w_1920,h_1080,c_fill/images/panoramic/GettyImages-577674005_492115_zfpgiw.jpg',
-		'https://www.pixel4k.com/wp-content/uploads/2018/09/books-shelf-graffiti-art-4k_1536098329.jpg'
+		'https://covers.openlibrary.org/b/isbn/9780385533225-L.jpg',
+		'https://covers.openlibrary.org/b/isbn/9780717802418-L.jpg',
 	];
 
 	let index = 0;
@@ -29,9 +28,9 @@
 
 <style>
 	img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
+  display: block;
+  margin: auto;
+	width: 30%;
+	height: auto;
 	}
 </style>
