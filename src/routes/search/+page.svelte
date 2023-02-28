@@ -7,11 +7,18 @@
 
   async function onSubmit() {
     const query = '...' 
-    const results = await _searchOpenLibrary(query);
-    searchResults.set(results);
+    try {
+      const results = await _searchOpenLibrary(query);
+      searchResults.set(results);
+    } catch (error) {
+      console.error('An error occurred:', error);
+      searchResults.set([]);
+    }
   }
 
   $: results = $searchResults;
+  console.log(results);
+
 </script>
 
 <div>
