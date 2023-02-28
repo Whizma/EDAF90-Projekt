@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { _searchOpenLibrary } from './+page';
 	import type { SearchResult } from './+page';
+	import { _searchForCover } from './+page';
 	import { Card, Search, Heading, List, Li, Span, Button } from 'flowbite-svelte';
 	import { writable } from 'svelte/store';
 
@@ -51,7 +52,9 @@
 						{result.title}
 					</h5>
 					<p class="font-normal text-gray-700 dark:text-gray-400 leading-tight">
-						by {#if result.author_name}{result.author_name.join(', ')}{:else}Unknown{/if}
+						first published in {result.first_publish_year} by {#if result.author_name}{result.author_name.join(
+								', '
+							)}{:else}Unknown{/if}
 					</p>
 				</Card>
 			</div>

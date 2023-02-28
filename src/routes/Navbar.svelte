@@ -1,8 +1,5 @@
 <script>
 	import { Navbar, NavBrand, NavLi, NavUl, NavHamburger } from 'flowbite-svelte';
-	
-	
-
 </script>
 
 <Navbar let:hidden let:toggle>
@@ -20,12 +17,13 @@
 	<NavUl {hidden}>
 		<NavLi href="/" active={true}>Home</NavLi>
 		<NavLi href="/about">About</NavLi>
-		<NavLi href="favorites"> <img
-			src="https://www.iconpacks.net/icons/1/free-heart-icon-492-thumb.png"
-			class=" h-5 sm:h-5"
-			alt="Pog"
-		/>
-	</NavLi>
+		<NavLi href="favorites"
+			><img
+				src="https://www.iconpacks.net/icons/1/free-heart-icon-492-thumb.png"
+				class=" h-5 sm:h-5"
+				alt="Pog"
+			/>
+		</NavLi>
 		<NavLi href="/search">Search</NavLi>
 	</NavUl>
 </Navbar>
