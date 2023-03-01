@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { _searchOpenLibrary } from './+page';
 	import type { SearchResult } from './+page';
-	import { Card, Search, Heading, List, Li, Span, Button } from 'flowbite-svelte';
+	import { Card, Search, Button, Label, Input, Checkbox, A, Toggle } from 'flowbite-svelte';
 	import { writable } from 'svelte/store';
-	let hCard = false;
 
 	const searchResults = writable<SearchResult[]>([]);
 	let query = '';
@@ -22,6 +21,14 @@
 	}
 
 	$: results = $searchResults;
+
+	let isTextShown = false;
+
+	const toggleIsTextShown = () => {
+		isTextShown = !isTextShown;
+	};
+
+	$: buttonText = isTextShown ? 'Hide advanced' : 'Show advanced';
 </script>
 
 <div class="flex justify-center">
@@ -44,7 +51,32 @@
 			</svg>
 		</Button>
 	</form>
+	<div class="pl-2">
+		<Button gradient color="pinkToOrange" on:bind{toggleAdvanced} on:click={toggleIsTextShown}> {buttonText}</Button>
+	</div>
 </div>
+
+{#if isTextShown}
+	<div class="grid grid-cols-2 gap-2 w-1/2 mx-auto pt-5">
+		<div>
+			<Input type="text" id="hCard" placeholder="Title" />
+			<Input type="text" id="hCard" placeholder="Author"/>
+			<Input type="text" id="hCard" placeholder="Publisher"/>
+			<Input type="text" id="hCard" placeholder="Subject"/>
+			<Input type="text" id="hCard" placeholder="ISBN"/>
+			<Input type="text" id="hCard" placeholder="First Publish Year" />
+		</div>
+		<div>
+			<Input type="text" id="hCard" placeholder="Language"/>
+			<Input type="text" id="hCard" placeholder="Publish Year"/>
+			<Input type="text" id="hCard" placeholder="Person"/>
+			<Input type="text" id="hCard" placeholder="Place"/>
+			<Input type="text" id="hCard" placeholder="Time"/>
+			<Label for="hCard">Ebook</Label>
+			<Checkbox id="hCard" />
+		</div>
+	</div>
+{/if}
 
 {#if searchMade}
 	<div class="pt-2 flex flex-col items-center justify-center">
@@ -52,7 +84,12 @@
 		{#if results.length}
 			{#each results as result}
 				<div class="block mx-2 items-center w-1/3 pt-2 pb-2">
-					<Card img={result.isbn ? `https://covers.openlibrary.org/b/isbn/${result.isbn[0]}-L.jpg` : ""} horizontal reverse={hCard} alt="Book cover" href="https://openlibrary.org/isbn/{result.isbn[0]}">
+					<Card
+						img={result.isbn ? `https://covers.openlibrary.org/b/isbn/${result.isbn[0]}-L.jpg` : ''}
+						horizontal
+						alt="Book cover"
+						href="https://openlibrary.org/isbn/{result.isbn[0]}"
+					>
 						<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
 							{result.title}
 						</h5>
