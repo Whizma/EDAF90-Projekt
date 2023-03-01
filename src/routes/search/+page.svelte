@@ -3,6 +3,7 @@
 	import type { SearchResult } from './+page';
 	import { Card, Search, Heading, List, Li, Span, Button } from 'flowbite-svelte';
 	import { writable } from 'svelte/store';
+	let hCard = false;
 
 	const searchResults = writable<SearchResult[]>([]);
 	let query = '';
@@ -50,14 +51,13 @@
 		<h1 class="flex text-2xl font-semibold">Search results</h1>
 		{#if results.length}
 			{#each results as result}
-				<div class="block mx-2 items-center w-1/6">
-					<Card href="https://openlibrary.org/" class="items-center">
+				<div class="block mx-2 items-center w-1/3 pt-2 pb-2">
+					<Card img="https://covers.openlibrary.org/b/isbn/{result.isbn[0]}-L.jpg" horizontal reverse={hCard} alt="Book cover">
 						<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
 							{result.title}
 						</h5>
-						<p class="font-normal text-gray-700 dark:text-gray-400 leading-tight">
+						<p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-tight">
 							by {#if result.author_name}{result.author_name.join(', ')}
-							<img alt ="" src="https://covers.openlibrary.org/b/isbn/{result.isbn[0]}-L.jpg"/>
 							{:else}Unknown{/if}
 						</p>
 					</Card>
