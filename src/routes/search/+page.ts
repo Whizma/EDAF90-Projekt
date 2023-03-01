@@ -18,3 +18,14 @@ export const _searchForCover = async (isbn: string): Promise<string> => {
 	const response = await fetch(`https://covers.openlibrary.org/b/isbn/${isbn}-M.jpg`);
 	return response.url;
 };
+
+export const _buildAdvancedJson = async (query: string): Promise<SearchResult[]> => {
+
+	const results = await _searchOpenLibrary(query);
+	const advancedResults = await Promise.all(results.map(async (result) => {
+		return {
+			...result,
+		};
+	}));
+	return advancedResults;
+}
