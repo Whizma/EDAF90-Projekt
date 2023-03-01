@@ -52,7 +52,7 @@
 		{#if results.length}
 			{#each results as result}
 				<div class="block mx-2 items-center w-1/3 pt-2 pb-2">
-					<Card img="https://covers.openlibrary.org/b/isbn/{result.isbn[0]}-L.jpg" horizontal reverse={hCard} alt="Book cover">
+					<Card img={result.isbn ? `https://covers.openlibrary.org/b/isbn/${result.isbn[0]}-L.jpg` : ""} horizontal reverse={hCard} alt="Book cover">
 						<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
 							{result.title}
 						</h5>
