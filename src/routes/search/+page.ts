@@ -3,6 +3,12 @@ export interface SearchResult {
 	author_name: string[];
 	first_publish_year: number;
 	isbn: string[];
+	publisher: string[];
+	subject: string[];
+	language: string[];
+	publish_year: number[];
+	person: string[];
+	place: string[];
 }
 
 export const _searchOpenLibrary = async (query: string): Promise<SearchResult[]> => {
@@ -19,13 +25,9 @@ export const _searchForCover = async (isbn: string): Promise<string> => {
 	return response.url;
 };
 
-export const _buildAdvancedJson = async (query: string): Promise<SearchResult[]> => {
-
-	const results = await _searchOpenLibrary(query);
-	const advancedResults = await Promise.all(results.map(async (result) => {
-		return {
-			...result,
-		};
-	}));
-	return advancedResults;
-}
+export const _searchOpenLibraryJSON = async (query: JSON): Promise<SearchResult[]> => {
+	const response = await fetch(`https://openlibrary.org/search.json?q=${query}}`);
+	const json = await response.json();
+	console.log(json.docs);
+	return json.docs;
+};

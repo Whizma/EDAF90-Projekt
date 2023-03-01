@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { _searchOpenLibrary } from './+page';
+	import { _searchOpenLibrary, _searchOpenLibraryJSON } from './+page';
 	import type { SearchResult } from './+page';
-	import { Card, Search, Button, Label, Input, Checkbox, A, Toggle } from 'flowbite-svelte';
+	import { Card, Search, Button, Input } from 'flowbite-svelte';
 	import { writable } from 'svelte/store';
 
 	const searchResults = writable<SearchResult[]>([]);
@@ -29,6 +29,20 @@
 	};
 
 	$: buttonText = isTextShown ? 'Hide advanced' : 'Show advanced';
+
+	let formData = new FormData();
+
+	function handleAdvancedSubmit(event: Event) {
+		event.preventDefault();
+		const data = Object.fromEntries(formData);
+		console.log(_searchOpenLibraryJSON(data));
+	}
+
+	function handleAdvancedInput(event: Event) {
+		const target = event.target as HTMLInputElement;
+		formData.set(target.name, target.value);
+	}
+
 </script>
 
 <div class="flex justify-center">
@@ -52,30 +66,117 @@
 		</Button>
 	</form>
 	<div class="pl-2">
-		<Button gradient color="pinkToOrange" on:bind{toggleAdvanced} on:click={toggleIsTextShown}> {buttonText}</Button>
+		<Button gradient color="pinkToOrange" on:bind{toggleAdvanced} on:click={toggleIsTextShown}>
+			{buttonText}</Button
+		>
 	</div>
 </div>
 
 {#if isTextShown}
-	<div class="grid grid-cols-2 gap-2 w-1/2 mx-auto pt-5">
-		<div>
-			<Input type="text" id="hCard" placeholder="Title" />
-			<Input type="text" id="hCard" placeholder="Author"/>
-			<Input type="text" id="hCard" placeholder="Publisher"/>
-			<Input type="text" id="hCard" placeholder="Subject"/>
-			<Input type="text" id="hCard" placeholder="ISBN"/>
-			<Input type="text" id="hCard" placeholder="First Publish Year" />
+	<form on:submit={handleAdvancedSubmit}>
+		<div class="grid grid-cols-2 gap-10 w-1/2 mx-auto pt-5">
+			<div>
+				<Input
+					style="margin-bottom: 10px;"
+					type="text"
+					id="hCard"
+					on:input={handleAdvancedInput}
+					name="title"
+					placeholder="Title"
+				/>
+				<Input
+					style="margin-bottom: 10px;"
+					type="text"
+					id="hCard"
+					on:input={handleAdvancedInput}
+					name="author_name"
+					placeholder="Author"
+				/>
+				<Input
+					style="margin-bottom: 10px;"
+					type="text"
+					id="hCard"
+					on:input={handleAdvancedInput}
+					name="publisher"
+					placeholder="Publisher"
+				/>
+				<Input
+					style="margin-bottom: 10px;"
+					type="text"
+					id="hCard"
+					on:input={handleAdvancedInput}
+					name="subject"
+					placeholder="Subject"
+				/>
+				<Input
+					style="margin-bottom: 10px;"
+					type="text"
+					id="hCard"
+					on:input={handleAdvancedInput}
+					name="isbn"
+					placeholder="ISBN"
+				/>
+			</div>
+			<div>
+				<Input
+					style="margin-bottom: 10px;"
+					type="text"
+					id="hCard"
+					on:input={handleAdvancedInput}
+					name="language"
+					placeholder="Language"
+				/>
+				<Input
+					style="margin-bottom: 10px;"
+					type="text"
+					id="hCard"
+					on:input={handleAdvancedInput}
+					name="publish_year"
+					placeholder="Publish Year"
+				/>
+				<Input
+					style="margin-bottom: 10px;"
+					type="text"
+					id="hCard"
+					on:input={handleAdvancedInput}
+					name="first_publish_year"
+					placeholder="First Publish Year"
+				/>
+				<Input
+					style="margin-bottom: 10px;"
+					type="text"
+					id="hCard"
+					on:input={handleAdvancedInput}
+					name="person"
+					placeholder="Person"
+				/>
+				<Input
+					style="margin-bottom: 10px;"
+					type="text"
+					id="hCard"
+					on:input={handleAdvancedInput}
+					name="place"
+					placeholder="Place"
+				/>
+			</div>
 		</div>
-		<div>
-			<Input type="text" id="hCard" placeholder="Language"/>
-			<Input type="text" id="hCard" placeholder="Publish Year"/>
-			<Input type="text" id="hCard" placeholder="Person"/>
-			<Input type="text" id="hCard" placeholder="Place"/>
-			<Input type="text" id="hCard" placeholder="Time"/>
-			<Label for="hCard">Ebook</Label>
-			<Checkbox id="hCard" />
-		</div>
-	</div>
+		<Button type="submit" class="!p-2.5">
+			<svg
+				class="w-5 h-5"
+				fill="none"
+				stroke="currentColor"
+				viewBox="0 0 24 24"
+				xmlns="http://www.w3.org/2000/svg"
+			>
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+				/>
+			</svg>
+		</Button>
+	</form>
 {/if}
 
 {#if searchMade}
