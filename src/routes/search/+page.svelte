@@ -42,7 +42,6 @@
 		const target = event.target as HTMLInputElement;
 		formData.set(target.name, target.value);
 	}
-
 </script>
 
 <div class="flex justify-center">
@@ -198,6 +197,10 @@
 							by {#if result.author_name}{result.author_name.join(', ')}
 							{:else}Unknown{/if}
 						</p>
+						<div>
+							<input type="checkbox" id="heart">
+							<label for="heart">&#9829</label>
+						</div>
 					</Card>
 				</div>
 			{/each}
@@ -206,3 +209,15 @@
 		{/if}
 	</div>
 {/if}
+
+<style>
+/* changes the color when selected */
+input:checked ~ label {
+  color: rgb(225, 25, 25);
+}
+
+/* for styling purpose only */
+label {
+  font-size: 2em;
+}
+</style>

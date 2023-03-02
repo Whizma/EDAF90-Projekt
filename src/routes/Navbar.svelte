@@ -14,16 +14,16 @@
 		</span>
 	</NavBrand>
 	<NavHamburger on:click={toggle} />
-	<NavUl {hidden}>
-		<NavLi href="/" active={true}>Home</NavLi>
+	<NavUl {hidden}> 
+		<NavLi href="/">Home</NavLi>
 		<NavLi href="/about">About</NavLi>
-		<NavLi href="favorites"
-			><img
-				src="https://www.iconpacks.net/icons/1/free-heart-icon-492-thumb.png"
-				class=" h-5 sm:h-5"
-				alt="Pog"
-			/>
-		</NavLi>
+		<NavLi href="favorites"><label>&#9829</label></NavLi>
 		<NavLi href="/search">Search</NavLi>
 	</NavUl>
 </Navbar>
+
+<style>
+	label {
+	  font-size: 1.5em;
+	}
+	</style>
