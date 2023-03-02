@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { _searchOpenLibrary, _searchOpenLibraryJSON } from './+page';
+	import { _searchOpenLibrary, _advancedSearch } from './+page';
 	import type { SearchResult } from './+page';
 	import { Card, Search, Button, Input } from 'flowbite-svelte';
 	import { writable } from 'svelte/store';
@@ -32,9 +32,16 @@
 
 	let formData = new FormData();
 
-	function handleAdvancedSubmit(event: Event) {
-		event.preventDefault();
-		console.log(formData);
+	async function handleAdvancedSubmit(event: Event) {
+		try {
+			const results = await _advancedSearch(formData);
+			searchResults.set(results);
+			searchMade = true;
+		} catch (error) {
+			console.error('An error occurred:', error);
+			searchResults.set([]);
+			searchMade = true;
+		}
 	}
 
 	function handleAdvancedInput(event: Event) {
@@ -80,7 +87,7 @@
 					type="text"
 					id="hCard"
 					on:input={handleAdvancedInput}
-					name="title"
+					name=""
 					placeholder="Title"
 				/>
 				<Input

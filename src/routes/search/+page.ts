@@ -25,9 +25,22 @@ export const _searchForCover = async (isbn: string): Promise<string> => {
 	return response.url;
 };
 
-export const _searchOpenLibraryJSON = async (query: JSON): Promise<SearchResult[]> => {
-	const response = await fetch(`https://openlibrary.org/search.json?q=${query}}`);
-	const json = await response.json();
-	console.log(json.docs);
-	return json.docs;
+export const _advancedSearch = async (formData: FormData): Promise<SearchResult[]>  => {
+  const paramsArray: [string, string][] = [];
+
+  for (const [key, value] of formData.entries()) {
+    paramsArray.push([key, value.toString()]);
+  }
+
+  const params = new URLSearchParams(paramsArray);
+
+	console.log(`https://openlibrary.org/search.json?q${params.toString()}`);
+  const response = await fetch(`https://openlibrary.org/search.json?q${params.toString()}`);
+  const json = await response.json();
+
+  console.log(json.docs);
+
+  return json.docs;
 };
+
+	
