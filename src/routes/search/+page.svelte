@@ -34,8 +34,7 @@
 
 	function handleAdvancedSubmit(event: Event) {
 		event.preventDefault();
-		const data = Object.fromEntries(formData);
-		console.log(_searchOpenLibraryJSON(data));
+		console.log(formData);
 	}
 
 	function handleAdvancedInput(event: Event) {
