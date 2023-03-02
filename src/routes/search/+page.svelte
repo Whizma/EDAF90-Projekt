@@ -33,6 +33,7 @@
 	let formData = new FormData();
 
 	async function handleAdvancedSubmit(event: Event) {
+		event.preventDefault();
 		try {
 			const results = await _advancedSearch(formData);
 			searchResults.set(results);
@@ -86,7 +87,7 @@
 					type="text"
 					id="hCard"
 					on:input={handleAdvancedInput}
-					name=""
+					name="title"
 					placeholder="Title"
 				/>
 				<Input
@@ -192,10 +193,10 @@
 							by {#if result.author_name}{result.author_name.join(', ')}
 							{:else}Unknown{/if}
 						</p>
-						<div>
+						<!-- <div>
 							<input type="checkbox" id="heart">
 							<label for="heart">&#9829</label>
-						</div>
+						</div> -->
 					</Card>
 				</div>
 			{/each}
@@ -205,7 +206,7 @@
 	</div>
 {/if}
 
-<style>
+<!-- <style>
 /* changes the color when selected */
 input:checked ~ label {
   color: rgb(225, 25, 25);
@@ -215,4 +216,4 @@ input:checked ~ label {
 label {
   font-size: 2em;
 }
-</style>
+</style> -->
