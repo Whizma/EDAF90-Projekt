@@ -9,6 +9,7 @@
 	let searchMade = false;
 
 	async function onSubmit() {
+		event?.preventDefault()
 		try {
 			const results = await _searchOpenLibrary(query);
 			searchResults.set(results);
