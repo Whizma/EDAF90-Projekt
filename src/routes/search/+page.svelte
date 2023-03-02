@@ -159,6 +159,7 @@
 				/>
 			</div>
 		</div>
+		<div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
 		<Button type="submit" class="!p-2.5">
 			<svg
 				class="w-5 h-5"
@@ -175,6 +176,7 @@
 				/>
 			</svg>
 		</Button>
+	</div>
 	</form>
 {/if}
 
@@ -188,7 +190,7 @@
 						img={result.isbn ? `https://covers.openlibrary.org/b/isbn/${result.isbn[0]}-L.jpg` : ''}
 						horizontal
 						alt="Book cover"
-						href="https://openlibrary.org/isbn/{result.isbn[0]}"
+						href={result.isbn ? `https://openlibrary.org/isbn/${result.isbn[0]}` : ''}
 					>
 						<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
 							{result.title}
