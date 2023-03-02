@@ -9,7 +9,7 @@
 	let searchMade = false;
 
 	async function onSubmit() {
-		event?.preventDefault()
+		event?.preventDefault();
 		try {
 			const results = await _searchOpenLibrary(query);
 			searchResults.set(results);
@@ -168,10 +168,10 @@
 			</div>
 		</div>
 		<div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
-		<Button type="submit" class="!p-2.5" style="width: 200px;">
-			 <span class="">Filter</span>
-		</Button>
-	</div>
+			<Button type="submit" class="!p-2.5" style="width: 200px;">
+				<span class="">Filter</span>
+			</Button>
+		</div>
 	</form>
 {/if}
 
@@ -185,7 +185,7 @@
 						img={result.isbn ? `https://covers.openlibrary.org/b/isbn/${result.isbn[0]}-L.jpg` : ''}
 						horizontal
 						alt="Book cover"
-						href={result.isbn ? `https://openlibrary.org/isbn/${result.isbn[0]}` : ''}
+						href={result.isbn ? `/book/${result.isbn[0]}` : ''}
 					>
 						<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
 							{result.title}

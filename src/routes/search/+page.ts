@@ -1,5 +1,3 @@
-import { prevent_default } from "svelte/internal";
-
 export interface SearchResult {
 	title: string;
 	author_name: string[];
@@ -25,25 +23,23 @@ export const _fetchIsbn = async (query: string): Promise<SearchResult[]> => {
 	return json.docs;
 };
 
-export const _advancedSearch = async (formData: FormData): Promise<SearchResult[]>  => {
+export const _advancedSearch = async (formData: FormData): Promise<SearchResult[]> => {
 	let paramsArray: [string, string][] = [];
 
-  for (const [key, value] of formData.entries()) {
-	if(paramsArray.length === 0) {
-		paramsArray.push(["", value.toString()]);
-		continue;
+	for (const [key, value] of formData.entries()) {
+		if (paramsArray.length === 0) {
+			paramsArray.push(['', value.toString()]);
+			continue;
+		}
+		if (value.toString()) {
+			paramsArray.push([key, value.toString()]);
+		}
 	}
-	if (value.toString()) {
-		paramsArray.push([key, value.toString()]);
-	}
-  }
 
 	const parameters = new URLSearchParams(paramsArray);
 
-  const response = await fetch(`https://openlibrary.org/search.json?q${parameters.toString()}`);
-  const json = await response.json();
+	const response = await fetch(`https://openlibrary.org/search.json?q${parameters.toString()}`);
+	const json = await response.json();
 	paramsArray = [];
-  return json.docs;
+	return json.docs;
 };
-
-	
