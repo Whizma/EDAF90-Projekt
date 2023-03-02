@@ -20,7 +20,7 @@ export const _searchOpenLibrary = async (query: string): Promise<SearchResult[]>
 };
 
 export const _fetchIsbn = async (query: string): Promise<SearchResult[]> => {
-	const response = await fetch(`https://openlibrary.org/isbn/${query}.json`);
+	const response = await fetch(`https://openlibrary.org/search.json?isbn=${query}`);
 	const json = await response.json();
 	return json.docs;
 };
@@ -36,12 +36,10 @@ export const _advancedSearch = async (formData: FormData): Promise<SearchResult[
 	if (value.toString()) {
 		paramsArray.push([key, value.toString()]);
 	}
-	console.log(value.toString());
   }
 
 	const parameters = new URLSearchParams(paramsArray);
 
-	console.log(`https://openlibrary.org/search.json?q${parameters.toString()}`);
   const response = await fetch(`https://openlibrary.org/search.json?q${parameters.toString()}`);
   const json = await response.json();
 	paramsArray = [];

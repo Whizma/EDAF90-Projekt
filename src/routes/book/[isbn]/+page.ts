@@ -1,9 +1,7 @@
-import { error } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
+import { _fetchIsbn } from '../../search/+page';
  
-export const load = (({ params }) => {
-    return {
-      isbn: params.isbn,
-    };
-  throw error(404, 'Not found');
+export const load = (async({ params }) => {
+  const res = await _fetchIsbn(params.isbn);
+  return { res };
 }) satisfies PageLoad;
