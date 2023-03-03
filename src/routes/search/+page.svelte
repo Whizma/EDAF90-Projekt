@@ -51,38 +51,46 @@
 		const target = event.target as HTMLInputElement;
 		formData.set(target.name, target.value);
 	}
+	
+	const savedData = typeof localStorage !== 'undefined' ? localStorage.getItem('isbn') : null;
+	const favs = writable(savedData ? JSON.parse(savedData) : []);
 
-	const favs = writable<string[]>([]);
+
+	onMount(() => {
+		favs.subscribe((data) => {
+			localStorage.setItem('isbn', JSON.stringify(data));
+		});
+	});
+
+	onDestroy(() => {
+		favs.set([]);
+	});
 
 	const toggleFavorited = (value: string) => {
-		let currentFavs: string[] = [];
-		const storedFavs = localStorage.getItem("isbn");
-		if (storedFavs !== null) {
-		currentFavs = JSON.parse(storedFavs);
-		}
-
-		const index = currentFavs.indexOf(value);
-		if (index !== -1) {
- 			currentFavs.splice(index, 1);
-		} else {
-			currentFavs.push(value);
-		}
-		console.log(currentFavs);
-		favs.update(favs => [...favs, value]);
-		console.log(favs);
-		localStorage.setItem("isbn", JSON.stringify(currentFavs));
-	}
+		favs.update((favs) => {
+			const index = favs.indexOf(value);
+			if (index !== -1) {
+				// value already exists, remove it
+				favs.splice(index, 1);
+			} else {
+				// value doesn't exist, add it
+				favs.push(value);
+			}
+			// return the updated array
+			return [...favs];
+		});
+		console.log($favs);
+		console.log(localStorage.getItem('isbn'));
+	};
 
 	const isFavorited = (isbn: string) => {
-		const storedFavs = localStorage.getItem("isbn");
+		const storedFavs = localStorage.getItem('isbn');
 		if (storedFavs !== null) {
 			const currentFavs = JSON.parse(storedFavs);
 			return currentFavs.includes(isbn);
 		}
 		return false;
-	}
-
-
+	};
 </script>
 
 <div class="flex justify-center">
@@ -220,19 +228,20 @@
 						alt="Book cover"
 					>
 						<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-							 <a href={result.isbn ? `/book/${result.isbn[0]}` : ''}>{result.title}</a>
+							<a href={result.isbn ? `/book/${result.isbn[0]}` : ''}>{result.title}</a>
 						</h5>
 						<p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-tight">
 							by {#if result.author_name}{result.author_name.join(', ')}
 							{:else}Unknown{/if}
 						</p>
 						<Button
-							gradient color="purpleToPink"
+							gradient
+							color="purpleToPink"
 							on:bind{toggleFavorited(result.isbn[0])}
 							on:click={() => toggleFavorited(result.isbn[0])}
-						> {#if isFavorited(result.isbn[0])}Unfavorite{:else}Favorite{/if}
-							</Button
 						>
+							{#if isFavorited(result.isbn[0])}Unfavorite{:else}Favorite{/if}
+						</Button>
 					</Card>
 				</div>
 			{/each}
