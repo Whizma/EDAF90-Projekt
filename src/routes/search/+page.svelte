@@ -21,6 +21,32 @@
 		}
 	}
 
+	const toggleFavorited = (value: string) => {
+		let currentFavs: string[] = [];
+		const storedFavs = localStorage.getItem("isbn");
+		if (storedFavs !== null) {
+		currentFavs = JSON.parse(storedFavs);
+		}
+
+		const index = currentFavs.indexOf(value);
+		if (index !== -1) {
+ 			currentFavs.splice(index, 1);
+		} else {
+			currentFavs.push(value);
+		}
+		console.log(currentFavs);
+		localStorage.setItem("isbn", JSON.stringify(currentFavs));
+	}
+
+	const isFavorited = (isbn: string) => {
+		const storedFavs = localStorage.getItem("isbn");
+		if (storedFavs !== null) {
+			const currentFavs = JSON.parse(storedFavs);
+			return currentFavs.includes(isbn);
+		}
+		return false;
+	}
+
 	$: results = $searchResults;
 
 	let isTextShown = false;
@@ -185,19 +211,21 @@
 						img={result.isbn ? `https://covers.openlibrary.org/b/isbn/${result.isbn[0]}-L.jpg` : ''}
 						horizontal
 						alt="Book cover"
-						href={result.isbn ? `/book/${result.isbn[0]}` : ''}
 					>
 						<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-							{result.title}
+							 <a href={result.isbn ? `/book/${result.isbn[0]}` : ''}>{result.title}</a>
 						</h5>
 						<p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-tight">
 							by {#if result.author_name}{result.author_name.join(', ')}
 							{:else}Unknown{/if}
 						</p>
-						<!-- <div>
-							<input type="checkbox" id="heart">
-							<label for="heart">&#9829</label>
-						</div> -->
+						<Button
+							gradient color="purpleToPink"
+							on:bind{toggleFavorited(result.isbn[0])}
+							on:click={() => toggleFavorited(result.isbn[0])}
+						> {#if isFavorited(result.isbn[0])}Unfavorite{:else}Favorite{/if}
+							</Button
+						>
 					</Card>
 				</div>
 			{/each}
@@ -206,15 +234,3 @@
 		{/if}
 	</div>
 {/if}
-
-<!-- <style>
-/* changes the color when selected */
-input:checked ~ label {
-  color: rgb(225, 25, 25);
-}
-
-/* for styling purpose only */
-label {
-  font-size: 2em;
-}
-</style> -->
