@@ -39,6 +39,7 @@
 	"dependencies": {
 		"@popperjs/core": "^2.11.6",
 		"classnames": "^2.3.2",
+		"cursor-effects": "^1.0.11",
 		"flowbite": "^1.6.3"
 	}
 }
