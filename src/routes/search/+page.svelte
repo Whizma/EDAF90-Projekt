@@ -3,6 +3,7 @@
 	import type { SearchResult } from './+page';
 	import { Card, Search, Button, Input } from 'flowbite-svelte';
 	import { writable } from 'svelte/store';
+	import { onMount, onDestroy } from 'svelte';
 
 	const searchResults = writable<SearchResult[]>([]);
 	let query = '';
@@ -19,32 +20,6 @@
 			searchResults.set([]);
 			searchMade = true;
 		}
-	}
-
-	const toggleFavorited = (value: string) => {
-		let currentFavs: string[] = [];
-		const storedFavs = localStorage.getItem("isbn");
-		if (storedFavs !== null) {
-		currentFavs = JSON.parse(storedFavs);
-		}
-
-		const index = currentFavs.indexOf(value);
-		if (index !== -1) {
- 			currentFavs.splice(index, 1);
-		} else {
-			currentFavs.push(value);
-		}
-		console.log(currentFavs);
-		localStorage.setItem("isbn", JSON.stringify(currentFavs));
-	}
-
-	const isFavorited = (isbn: string) => {
-		const storedFavs = localStorage.getItem("isbn");
-		if (storedFavs !== null) {
-			const currentFavs = JSON.parse(storedFavs);
-			return currentFavs.includes(isbn);
-		}
-		return false;
 	}
 
 	$: results = $searchResults;
@@ -76,6 +51,38 @@
 		const target = event.target as HTMLInputElement;
 		formData.set(target.name, target.value);
 	}
+
+	const favs = writable<string[]>([]);
+
+	const toggleFavorited = (value: string) => {
+		let currentFavs: string[] = [];
+		const storedFavs = localStorage.getItem("isbn");
+		if (storedFavs !== null) {
+		currentFavs = JSON.parse(storedFavs);
+		}
+
+		const index = currentFavs.indexOf(value);
+		if (index !== -1) {
+ 			currentFavs.splice(index, 1);
+		} else {
+			currentFavs.push(value);
+		}
+		console.log(currentFavs);
+		favs.update(favs => [...favs, value]);
+		console.log(favs);
+		localStorage.setItem("isbn", JSON.stringify(currentFavs));
+	}
+
+	const isFavorited = (isbn: string) => {
+		const storedFavs = localStorage.getItem("isbn");
+		if (storedFavs !== null) {
+			const currentFavs = JSON.parse(storedFavs);
+			return currentFavs.includes(isbn);
+		}
+		return false;
+	}
+
+
 </script>
 
 <div class="flex justify-center">
