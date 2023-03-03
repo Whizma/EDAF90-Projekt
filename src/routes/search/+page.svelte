@@ -51,10 +51,9 @@
 		const target = event.target as HTMLInputElement;
 		formData.set(target.name, target.value);
 	}
-	
+
 	const savedData = typeof localStorage !== 'undefined' ? localStorage.getItem('isbn') : null;
 	const favs = writable(savedData ? JSON.parse(savedData) : []);
-
 
 	onMount(() => {
 		favs.subscribe((data) => {
@@ -79,8 +78,8 @@
 			// return the updated array
 			return [...favs];
 		});
-		console.log($favs);
-		console.log(localStorage.getItem('isbn'));
+		console.log("favs " + $favs);
+		// console.log("localStorage " + localStorage.getItem('isbn'));
 	};
 
 	const isFavorited = (isbn: string) => {
@@ -91,6 +90,7 @@
 		}
 		return false;
 	};
+
 </script>
 
 <div class="flex justify-center">
@@ -221,6 +221,7 @@
 		<h1 class="flex text-2xl font-semibold">Search results</h1>
 		{#if results.length}
 			{#each results as result}
+			{#if result.isbn}
 				<div class="block mx-2 items-center w-1/3 pt-2 pb-2">
 					<Card
 						img={result.isbn ? `https://covers.openlibrary.org/b/isbn/${result.isbn[0]}-L.jpg` : ''}
@@ -240,10 +241,11 @@
 							on:bind{toggleFavorited(result.isbn[0])}
 							on:click={() => toggleFavorited(result.isbn[0])}
 						>
-							{#if isFavorited(result.isbn[0])}Unfavorite{:else}Favorite{/if}
+						{#if ($favs.includes(result.isbn[0] ? result.isbn[0] : ""))} Unfavorite {:else} Favorite {/if}
 						</Button>
 					</Card>
 				</div>
+				{/if}
 			{/each}
 		{:else}
 			<p>No results found.</p>
