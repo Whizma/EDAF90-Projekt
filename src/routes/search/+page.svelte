@@ -61,10 +61,6 @@
 		});
 	});
 
-	onDestroy(() => {
-		favs.set([]);
-	});
-
 	const toggleFavorited = (value: string) => {
 		favs.update((favs) => {
 			const index = favs.indexOf(value);
@@ -78,19 +74,7 @@
 			// return the updated array
 			return [...favs];
 		});
-		console.log("favs " + $favs);
-		// console.log("localStorage " + localStorage.getItem('isbn'));
 	};
-
-	const isFavorited = (isbn: string) => {
-		const storedFavs = localStorage.getItem('isbn');
-		if (storedFavs !== null) {
-			const currentFavs = JSON.parse(storedFavs);
-			return currentFavs.includes(isbn);
-		}
-		return false;
-	};
-
 </script>
 
 <div class="flex justify-center">
@@ -221,30 +205,36 @@
 		<h1 class="flex text-2xl font-semibold">Search results</h1>
 		{#if results.length}
 			{#each results as result}
-			{#if result.isbn}
-				<div class="block mx-2 items-center w-1/3 pt-2 pb-2">
-					<Card
-						img={result.isbn ? `https://covers.openlibrary.org/b/isbn/${result.isbn[0]}-L.jpg` : ''}
-						horizontal
-						alt="Book cover"
-					>
-						<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-							<a href={result.isbn ? `/book/${result.isbn[0]}` : ''}>{result.title}</a>
-						</h5>
-						<p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-tight">
-							by {#if result.author_name}{result.author_name.join(', ')}
-							{:else}Unknown{/if}
-						</p>
-						<Button
-							gradient
-							color="purpleToPink"
-							on:bind{toggleFavorited(result.isbn[0])}
-							on:click={() => toggleFavorited(result.isbn[0])}
+				{#if result.isbn}
+					<div class="block mx-2 items-center w-1/3 pt-2 pb-2">
+						<Card
+							img={result.isbn
+								? `https://covers.openlibrary.org/b/isbn/${result.isbn[0]}-L.jpg`
+								: ''}
+							horizontal
+							alt="Book cover"
 						>
-						{#if ($favs.includes(result.isbn[0] ? result.isbn[0] : ""))} Unfavorite {:else} Favorite {/if}
-						</Button>
-					</Card>
-				</div>
+							<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+								<a href={result.isbn ? `/book/${result.isbn[0]}` : ''}>{result.title}</a>
+							</h5>
+							<p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-tight">
+								by {#if result.author_name}{result.author_name.join(', ')}
+								{:else}Unknown{/if}
+							</p>
+							<Button
+								gradient
+								color="purpleToPink"
+								on:bind{toggleFavorited(result.isbn[0])}
+								on:click={() => toggleFavorited(result.isbn[0])}
+							>
+								{#if $favs.includes(result.isbn[0] ? result.isbn[0] : '')}
+									Unfavorite &#9829
+								{:else}
+									Favorite &#9829
+								{/if}
+							</Button>
+						</Card>
+					</div>
 				{/if}
 			{/each}
 		{:else}
