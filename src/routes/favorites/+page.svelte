@@ -12,12 +12,10 @@
 			const results = await Promise.all(
 				favoritesIsbns.map(async (isbn: string) => {
 					const result = await _fetchIsbn(isbn);
-					console.log(result);
 					return result;
 				})
 			);
-			searchResults.set(results);
-			console.log($searchResults);
+			searchResults.set(results.flat());
 		}
 		catch {
 			console.log('No favorites');
@@ -28,7 +26,7 @@
 	$: results = $searchResults;
 </script>
 
-<div class="block mx-10 w-1000 items-center pt-2 pb-2">
+<div class="block mx-10 w-1000 items-center pt-2 pb-2" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px;">
 	{#if results.length}	
 	{#each results as result}
 			{#if result}
@@ -46,16 +44,17 @@
 						{:else}Unknown{/if}
 					</p>
 					<p class="mb-3 font-normal text-gray-700 dark:text-gray-400 tracking-tight">
-						First publish year: {result.first_publish_year}
+						First publish year: {result.first_publish_year ? result.first_publish_year : ""}
 					</p>
 					<p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-tight">
-						ISBN: {result.isbn[0]}
+						ISBN: {result.isbn[0] ? result.isbn[0] : ""}
 					</p>
 					<p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-tight">
-						Publisher: {result.publisher[0]}
+						Publisher: {result.publisher[0] ? result.publisher[0] : ""}
 					</p>
 					<p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-tight">
-						Available languages: {result.language.join(', ')}
+						Available languages: {#if result.language}{result.language.join(', ')}
+						{:else}Unknown{/if}
 					</p>
 				</Card>
 			{/if}
