@@ -14,7 +14,7 @@
 		</span>
 	</NavBrand>
 	<NavHamburger on:click={toggle} />
-	<NavUl {hidden}> 
+	<NavUl {hidden}>
 		<NavLi href="/">Home</NavLi>
 		<NavLi href="favorites"><label>&#9829</label></NavLi>
 		<NavLi href="/search">Search</NavLi>
@@ -23,6 +23,6 @@
 
 <style>
 	label {
-	  font-size: 1.5em;
+		font-size: 1.5em;
 	}
-	</style>
+</style>
