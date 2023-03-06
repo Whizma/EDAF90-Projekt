@@ -22,7 +22,7 @@
 </script>
 
 <div class="block mx-10 w-1000 items-center pt-2 pb-2">
-	<Card 
+	<Card
 		img={result.isbn ? `https://covers.openlibrary.org/b/isbn/${result.isbn[0]}-L.jpg` : ''}
 		horizontal
 		alt="Book cover"
@@ -35,7 +35,7 @@
 			by {#if result.author_name}{result.author_name.join(', ')}
 			{:else}Unknown{/if}
 		</p>
-	<p class="mb-3 font-normal text-gray-700 dark:text-gray-400 tracking-tight">
+		<p class="mb-3 font-normal text-gray-700 dark:text-gray-400 tracking-tight">
 			First publish year: {result.first_publish_year}
 		</p>
 		<p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-tight">

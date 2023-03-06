@@ -17,8 +17,7 @@
 				})
 			);
 			searchResults.set(results.flat());
-		}
-		catch {
+		} catch {
 			console.log('No favorites');
 		}
 	};
@@ -48,9 +47,12 @@
 	};
 </script>
 
-<div class="block mx-10 w-1000 items-center pt-2 pb-2" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px;">
-	{#if results.length}	
-	{#each results as result}
+<div
+	class="block mx-10 w-1000 items-center pt-2 pb-2"
+	style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px;"
+>
+	{#if results.length}
+		{#each results as result}
 			{#if result}
 				<Card
 					img={result.isbn ? `https://covers.openlibrary.org/b/isbn/${result.isbn[0]}-L.jpg` : ''}
@@ -66,13 +68,13 @@
 						{:else}Unknown{/if}
 					</p>
 					<p class="mb-3 font-normal text-gray-700 dark:text-gray-400 tracking-tight">
-						First publish year: {result.first_publish_year ? result.first_publish_year : ""}
+						First publish year: {result.first_publish_year ? result.first_publish_year : ''}
 					</p>
 					<p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-tight">
-						ISBN: {result.isbn[0] ? result.isbn[0] : ""}
+						ISBN: {result.isbn[0] ? result.isbn[0] : ''}
 					</p>
 					<p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-tight">
-						Publisher: {result.publisher[0] ? result.publisher[0] : ""}
+						Publisher: {result.publisher[0] ? result.publisher[0] : ''}
 					</p>
 					<p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-tight">
 						Available languages: {#if result.language}{result.language.join(', ')}
@@ -80,19 +82,19 @@
 					</p>
 
 					<Button
-					gradient
-					color="purpleToPink"
-					on:bind{toggleFavorited(result.isbn[0])}
-					on:click={() => toggleFavorited(result.isbn[0])}
-				>
-					{#if $favs.includes(result.isbn[0] ? result.isbn[0] : '')}
-						Unfavorite &#9829
-					{:else}
-						Favorite &#9829
-					{/if}
-				</Button>
+						gradient
+						color="purpleToPink"
+						on:bind{toggleFavorited(result.isbn[0])}
+						on:click={() => toggleFavorited(result.isbn[0])}
+					>
+						{#if $favs.includes(result.isbn[0] ? result.isbn[0] : '')}
+							Unfavorite &#9829
+						{:else}
+							Favorite &#9829
+						{/if}
+					</Button>
 				</Card>
 			{/if}
 		{/each}
-		{/if}
+	{/if}
 </div>
