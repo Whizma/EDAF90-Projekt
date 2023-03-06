@@ -1,7 +1,8 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { _fetchIsbn } from '../search/+page';
 	import type { SearchResult } from '../search/+page';
-	import { Card } from 'flowbite-svelte';
+	import { Card, Button } from 'flowbite-svelte';
 	import { writable } from 'svelte/store';
 
 	const searchResults = writable<SearchResult[]>([]);
@@ -24,6 +25,27 @@
 
 	fetchResults();
 	$: results = $searchResults;
+
+	const savedData = typeof localStorage !== 'undefined' ? localStorage.getItem('isbn') : null;
+	const favs = writable(savedData ? JSON.parse(savedData) : []);
+
+	onMount(() => {
+		favs.subscribe((data) => {
+			localStorage.setItem('isbn', JSON.stringify(data));
+		});
+	});
+
+	const toggleFavorited = (value: string) => {
+		favs.update((favs) => {
+			const index = favs.indexOf(value);
+			if (index !== -1) {
+				favs.splice(index, 1);
+			} else {
+				favs.push(value);
+			}
+			return [...favs];
+		});
+	};
 </script>
 
 <div class="block mx-10 w-1000 items-center pt-2 pb-2" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px;">
@@ -56,6 +78,19 @@
 						Available languages: {#if result.language}{result.language.join(', ')}
 						{:else}Unknown{/if}
 					</p>
+
+					<Button
+					gradient
+					color="purpleToPink"
+					on:bind{toggleFavorited(result.isbn[0])}
+					on:click={() => toggleFavorited(result.isbn[0])}
+				>
+					{#if $favs.includes(result.isbn[0] ? result.isbn[0] : '')}
+						Unfavorite &#9829
+					{:else}
+						Favorite &#9829
+					{/if}
+				</Button>
 				</Card>
 			{/if}
 		{/each}

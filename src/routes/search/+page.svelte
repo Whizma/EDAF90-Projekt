@@ -65,13 +65,10 @@
 		favs.update((favs) => {
 			const index = favs.indexOf(value);
 			if (index !== -1) {
-				// value already exists, remove it
 				favs.splice(index, 1);
 			} else {
-				// value doesn't exist, add it
 				favs.push(value);
 			}
-			// return the updated array
 			return [...favs];
 		});
 	};
