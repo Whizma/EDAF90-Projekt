@@ -58,10 +58,10 @@
 					img={result.isbn ? `https://covers.openlibrary.org/b/isbn/${result.isbn[0]}-L.jpg` : ''}
 					horizontal
 					alt="Book cover"
-					href={result.isbn ? `https://openlibrary.org/isbn/${result.isbn[0]}` : ''}
 				>
 					<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
 						{result.title}
+						<a href={result.isbn ? `/book/${result.isbn[0]}` : ''}>{result.title}</a>
 					</h5>
 					<p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-tight">
 						by {#if result.author_name}{result.author_name.join(', ')}
